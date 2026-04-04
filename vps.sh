@@ -34,7 +34,7 @@ chmod 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys  
 # login using SSH key, it should not ask for password now
 ssh -i C:\Users\Acer\.ssh\id_ed25519.txt devuser@203.57.85.118  
-# Next time you login simply use
+# Next time you login simply use, no password should be asked
 ssh devuser@203.57.85.118
 
 Step 4: Disable password login
