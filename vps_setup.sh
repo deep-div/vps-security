@@ -119,6 +119,22 @@ Step 8: Enable Automatic Security Updates
 sudo apt install unattended-upgrades -y
 sudo dpkg-reconfigure --priority=low unattended-upgrades
 
+Step 8.1: Swap Setup
+# Create 2GB swap file
+sudo fallocate -l 2G /swapfile
+# Set correct permissions (security)
+sudo chmod 600 /swapfile
+# Format it as swap
+sudo mkswap /swapfile
+# Enable swap
+sudo swapon /swapfile
+# Make it permanent (survives reboot)
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+# Set swappiness (use swap less, keep system fast)
+sudo sysctl vm.swappiness=10
+# Make swappiness permanent
+echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.conf
+
 Step 9: Setup SSL Certificates
 # RUN IN LOCAL: It should point to your VPS IP address. Go in your domain DNS add VPS IP.
 ping fundscreener.online
