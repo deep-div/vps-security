@@ -19,6 +19,15 @@ PermitRootLogin no
 # restart SSH service
 sudo systemctl restart ssh  
 
+Step 2.1 Change Default SSH Port 
+# Run Ctrl+W and search for Port 22, change it to something else, for example Port 2222
+sudo nano /etc/ssh/sshd_config
+# change Port 22 to something else, for example Port 2222
+Port 2222
+# allow 2222 restart SSH service
+sudo ufw allow 2222
+sudo systemctl restart ssh
+
 Step 3: SSH Key setup
 # generate SSH key (local machine) ## CLick enter enter enter do not give any extra paths
 ssh-keygen  
