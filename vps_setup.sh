@@ -93,6 +93,10 @@ sudo fail2ban-client status
 # (optional) check SSH jail specifically
 sudo fail2ban-client status sshd  
 
+Step 6.1: Configure lynis for security auditing
+sudo apt install lynis -y
+sudo lynis audit system
+
 Step 7: Install Docker
 # install required packages
 sudo apt install apt-transport-https ca-certificates curl software-properties-common -y  
@@ -121,3 +125,16 @@ ping fundscreener.online
 sudo apt update
 sudo apt install certbot -y
 sudo certbot certonly --standalone -d fundscreener.online -d www.fundscreener.online
+
+Step 10: ALL Check
+echo "---- VPS SECURITY CHECK ----" && \
+echo "[User]" && whoami && \
+echo "[Sudo Access]" && sudo -n true && echo OK || echo FAIL && \
+echo "[SSH Root Login Disabled]" && sudo sshd -T | grep permitrootlogin && \
+echo "[SSH Password Auth Disabled]" && sudo sshd -T | grep passwordauthentication && \
+echo "[SSH Port]" && sudo sshd -T | grep ^port && \
+echo "[Firewall Status]" && sudo ufw status | grep Status && \
+echo "[Fail2Ban]" && systemctl is-active fail2ban && \
+echo "[Docker]" && systemctl is-active docker && \
+echo "[Auto Updates]" && systemctl is-enabled unattended-upgrades && \
+echo "[Open Ports]" && ss -tuln
