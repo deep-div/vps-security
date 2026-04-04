@@ -26,7 +26,10 @@ sudo nano /etc/ssh/sshd_config
 Port 2222
 # allow 2222 restart SSH service
 sudo ufw allow 2222
+# Restart SSH service
 sudo systemctl restart ssh
+# test new SSH port (run from local) PORT Changed TO 2222
+ssh -p 2222 devuser@203.57.85.118 
 
 Step 3: SSH Key setup
 # generate SSH key (local machine) ## CLick enter enter enter do not give any extra paths
@@ -107,3 +110,14 @@ sudo systemctl start docker
 sudo systemctl enable docker  
 # verify Docker
 docker --version  
+
+Step 8: Enable Automatic Security Updates
+sudo apt install unattended-upgrades -y
+sudo dpkg-reconfigure --priority=low unattended-upgrades
+
+Step 9: Setup SSL Certificates
+# RUN IN LOCAL: It should point to your VPS IP address. Go in your domain DNS add VPS IP.
+ping fundscreener.online
+sudo apt update
+sudo apt install certbot -y
+sudo certbot certonly --standalone -d fundscreener.online -d www.fundscreener.online
